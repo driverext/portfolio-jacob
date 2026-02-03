@@ -374,6 +374,7 @@ ul {
   background: linear-gradient(120deg, rgba(94, 242, 214, 0.12), transparent 55%);
   opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .project-card:hover::after {
