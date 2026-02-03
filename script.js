@@ -248,6 +248,7 @@ function initSnake() {
   function gameOver(message) {
     stopGame();
     setStatus(message);
+    resetGame();
   }
 
   function setStatus(message) {
