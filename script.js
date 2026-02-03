@@ -119,6 +119,10 @@ async function init() {
   renderList("current-list", data.currentClasses || []);
   renderList("previous-list", data.previousCoursework || []);
   renderProjects(data.projects || []);
+
+  setText("metric-projects", (data.projects || []).length);
+  setText("metric-current", (data.currentClasses || []).length);
+  setText("metric-previous", (data.previousCoursework || []).length);
 }
 
 init().catch((err) => {
