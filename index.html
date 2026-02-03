@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SWE Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="grid"></div>
+    </div>
+
+    <main class="page">
+      <header class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">Software Engineering Portfolio</p>
+          <h1 id="name">Your Name</h1>
+          <p id="tagline" class="tagline">Software Engineer | Student</p>
+          <div class="hero-actions">
+            <a id="resume" class="btn primary" href="#" target="_blank" rel="noreferrer">Resume</a>
+            <a id="email" class="btn ghost" href="#">Email</a>
+          </div>
+          <div class="hero-links">
+            <a id="github" href="#" target="_blank" rel="noreferrer">GitHub</a>
+            <span>•</span>
+            <a id="linkedin" href="#" target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <p class="card-label">Current Focus</p>
+          <ul id="current-classes" class="pill-list"></ul>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>About Me</h2>
+          <p class="section-sub">Quick snapshot of what I care about and how I work.</p>
+        </div>
+        <div class="about-card">
+          <p id="about-body"></p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Coursework</h2>
+          <p class="section-sub">What I am working through now and the foundation behind it.</p>
+        </div>
+        <div class="course-grid">
+          <div class="course-card">
+            <h3>Current Classes</h3>
+            <ul id="current-list" class="list"></ul>
+          </div>
+          <div class="course-card">
+            <h3>Previous Coursework</h3>
+            <ul id="previous-list" class="list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Projects</h2>
+          <p class="section-sub">Active work and recent builds with live links.</p>
+        </div>
+        <div id="projects" class="project-grid"></div>
+      </section>
+
+      <footer class="footer">
+        <p id="location"></p>
+        <p>Built for easy updates. Edit <span class="file">data.json</span> only.</p>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

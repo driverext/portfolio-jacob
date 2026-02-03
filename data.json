@@ -1,0 +1,38 @@
+﻿{
+  "meta": {
+    "name": "Jacob Kirk",
+    "tagline": "Software Engineer | CS @ UCF",
+    "email": "kirkjcs@gmail.com",
+    "location": "Orlando, FL",
+    "resumeUrl": "RESUME.pdf",
+    "githubUrl": "https://github.com/driverext",
+    "linkedinUrl": "https://www.linkedin.com/in/kirkjcs/"
+  },
+  "about": {
+    "headline": "About Me",
+    "body": "I build reliable software with a focus on clean architecture, strong fundamentals, and user-centered design. I enjoy turning complex problems into simple, maintainable solutions."
+  },
+  "currentClasses": [
+    "Operating Systems",
+    "Parallel and Distributed Programming"
+  ],
+  "previousCoursework": [
+    "Computer Science I/II (DS&A)",
+    "Artificial Intelligence",
+    "Enterprise Computing",
+    "Cyber Defense Analysis",
+    "Systems Software"
+  ],
+  "projects": [
+    {
+      "title": "Net Trace",
+      "status": "In Progress",
+      "description": "A full-stack web app that tracks personal finance with automated insights.",
+      "stack": ["Python", "Flask", "Scapy", "HTML/CSS", "JavaScript", "Leaflet.js"],
+      "links": [
+        { "label": "Repo", "url": "https://github.com/driverext/NetTrace" },
+        { "label": "Live Demo", "url": "#" }
+      ]
+    }
+  ]
+}
