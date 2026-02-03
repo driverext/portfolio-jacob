@@ -43,6 +43,24 @@
         { "label": "Repo", "url": "https://github.com/driverext/portfolio-jacob" },
         { "label": "Live Demo", "url": "https://driverext.github.io/portfolio-jacob/" }
       ]
+    },
+    {
+      "title": "Devup",
+      "status": "In Progress",
+      "description": "A small CLI that turns local environment setup into a single command by detecting your project, bringing up Docker services, generating .env files, and verifying health.",
+      "stack": ["Node.js", "JavaScript", "Docker", "Docker Compose"],
+      "links": [
+        { "label": "Repo", "url": "https://github.com/driverext/devup" }
+      ]
+    },
+    {
+      "title": "Locklint",
+      "status": "In Progress",
+      "description": "A static analysis tool that detects lock-order inversions in C/C++ codebases to provide early, design-level feedback on lock ordering before code runs.",
+      "stack": ["Python", "C/C++"],
+      "links": [
+        { "label": "Repo", "url": "https://github.com/driverext/locklint" }
+      ]
     }
   ]
 }
