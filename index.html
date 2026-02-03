@@ -54,7 +54,7 @@
           <p class="section-sub">Quick reflex check. Use arrow keys or WASD. Eat the core.</p>
         </div>
         <div class="game-card">
-          <canvas id="snake-canvas" width="480" height="320" aria-label="Snake game"></canvas>
+          <canvas id="snake-canvas" width="480" height="320" aria-label="Snake game" tabindex="0"></canvas>
           <div class="game-panel">
             <div class="game-stat">
               <span>Score</span>
@@ -64,6 +64,7 @@
               <span>Best</span>
               <strong id="snake-best">0</strong>
             </div>
+            <div class="game-status" id="snake-status">Click the board to focus, then press Start.</div>
             <div class="game-controls">
               <button id="snake-start" class="btn primary" type="button">Start</button>
               <button id="snake-reset" class="btn ghost" type="button">Reset</button>

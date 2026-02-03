@@ -10,7 +10,7 @@
   },
   "about": {
     "headline": "About Me",
-    "body": "I build reliable software with a focus on clean architecture, strong fundamentals, and user-centered design. I enjoy turning complex problems into simple, maintainable solutions."
+    "body": "I am a Computer Science major at the University of Central Florida with a strong interest in software development, machine learning, and security engineering. I focus on building reliable, maintainable systems and enjoy turning complex problems into clean, user-centered solutions. Outside of coursework and projects, I am an active member of the Delta Tau Delta fraternity, which has strengthened my teamwork, leadership, and communication skills. I am looking for opportunities where I can contribute quickly, learn from experienced engineers, and grow into a well-rounded software professional."
   },
   "currentClasses": [
     "Operating Systems",
@@ -32,6 +32,16 @@
       "links": [
         { "label": "Repo", "url": "https://github.com/driverext/NetTrace" },
         { "label": "Live Demo", "url": "#" }
+      ]
+    },
+    {
+      "title": "Portfolio Website (This Site)",
+      "status": "Completed",
+      "description": "A sleek, data-driven portfolio with a custom design and an embedded Snake mini-game.",
+      "stack": ["HTML", "CSS", "JavaScript"],
+      "links": [
+        { "label": "Repo", "url": "https://github.com/driverext/portfolio-jacob" },
+        { "label": "Live Demo", "url": "https://driverext.github.io/portfolio-jacob/" }
       ]
     }
   ]

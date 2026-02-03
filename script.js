@@ -131,6 +131,7 @@ function initSnake() {
   const ctx = canvas.getContext("2d");
   const scoreEl = document.getElementById("snake-score");
   const bestEl = document.getElementById("snake-best");
+  const statusEl = document.getElementById("snake-status");
   const startBtn = document.getElementById("snake-start");
   const resetBtn = document.getElementById("snake-reset");
 
@@ -155,6 +156,7 @@ function initSnake() {
     score = 0;
     placeFood();
     updateScore();
+    setStatus("Ready. Press Start or use an arrow key.");
     draw();
   }
 
@@ -177,11 +179,11 @@ function initSnake() {
   function step() {
     const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
     if (head.x < 0 || head.y < 0 || head.x >= cols || head.y >= rows) {
-      stopGame();
+      gameOver("Game over: hit the wall.");
       return;
     }
     if (snake.some((s) => s.x === head.x && s.y === head.y)) {
-      stopGame();
+      gameOver("Game over: collided with yourself.");
       return;
     }
     snake.unshift(head);
@@ -233,6 +235,7 @@ function initSnake() {
   function startGame() {
     if (running) return;
     running = true;
+    setStatus("In progress...");
     timer = setInterval(step, 110);
   }
 
@@ -242,34 +245,50 @@ function initSnake() {
     timer = null;
   }
 
+  function gameOver(message) {
+    stopGame();
+    setStatus(message);
+  }
+
+  function setStatus(message) {
+    if (statusEl) statusEl.textContent = message;
+  }
+
   function setDir(x, y) {
     if (dir.x === -x && dir.y === -y) return;
     dir = { x, y };
   }
 
-  document.addEventListener("keydown", (e) => {
+  function handleKey(e) {
     switch (e.key.toLowerCase()) {
       case "arrowup":
       case "w":
+        e.preventDefault();
         setDir(0, -1);
         break;
       case "arrowdown":
       case "s":
+        e.preventDefault();
         setDir(0, 1);
         break;
       case "arrowleft":
       case "a":
+        e.preventDefault();
         setDir(-1, 0);
         break;
       case "arrowright":
       case "d":
+        e.preventDefault();
         setDir(1, 0);
         break;
       default:
         return;
     }
     if (!running) startGame();
-  });
+  }
+
+  canvas.addEventListener("keydown", handleKey);
+  canvas.addEventListener("click", () => canvas.focus());
 
   if (startBtn) startBtn.addEventListener("click", startGame);
   if (resetBtn) {
@@ -279,7 +298,7 @@ function initSnake() {
     });
   }
 
-  bestEl.textContent = best;
+  if (bestEl) bestEl.textContent = best;
   resetGame();
 }
 

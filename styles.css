@@ -259,6 +259,11 @@ ul {
   background: radial-gradient(circle at top, rgba(94, 242, 214, 0.15), transparent 60%),
     #05070b;
   border: 1px solid rgba(94, 242, 214, 0.25);
+  outline: none;
+}
+
+#snake-canvas:focus {
+  box-shadow: 0 0 0 2px rgba(94, 242, 214, 0.45);
 }
 
 .game-panel {
@@ -283,6 +288,15 @@ ul {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.game-status {
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(6, 10, 18, 0.5);
+  border: 1px solid rgba(122, 162, 255, 0.25);
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 .game-hint {
