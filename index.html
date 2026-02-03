@@ -48,18 +48,28 @@
         </div>
       </header>
 
-      <section class="metrics">
-        <div class="metric-card">
-          <p class="metric-label">Projects</p>
-          <p id="metric-projects" class="metric-value">0</p>
+      <section class="game">
+        <div class="section-header">
+          <h2>Snake Challenge</h2>
+          <p class="section-sub">Quick reflex check. Use arrow keys or WASD. Eat the core.</p>
         </div>
-        <div class="metric-card">
-          <p class="metric-label">Current Classes</p>
-          <p id="metric-current" class="metric-value">0</p>
-        </div>
-        <div class="metric-card">
-          <p class="metric-label">Courses Completed</p>
-          <p id="metric-previous" class="metric-value">0</p>
+        <div class="game-card">
+          <canvas id="snake-canvas" width="480" height="320" aria-label="Snake game"></canvas>
+          <div class="game-panel">
+            <div class="game-stat">
+              <span>Score</span>
+              <strong id="snake-score">0</strong>
+            </div>
+            <div class="game-stat">
+              <span>Best</span>
+              <strong id="snake-best">0</strong>
+            </div>
+            <div class="game-controls">
+              <button id="snake-start" class="btn primary" type="button">Start</button>
+              <button id="snake-reset" class="btn ghost" type="button">Reset</button>
+            </div>
+            <p class="game-hint">Tap start, then arrow keys or WASD. Don’t hit the walls.</p>
+          </div>
         </div>
       </section>
 
