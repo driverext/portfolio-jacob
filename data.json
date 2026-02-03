@@ -31,7 +31,7 @@
       "stack": ["Python", "Flask", "Scapy", "HTML/CSS", "JavaScript", "Leaflet.js"],
       "links": [
         { "label": "Repo", "url": "https://github.com/driverext/NetTrace" },
-        { "label": "Live Demo", "url": "#" }
+        { "label": "Live Demo", "url": "https://driverext.github.io/NetTrace/" }
       ]
     },
     {
