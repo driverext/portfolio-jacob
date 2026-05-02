@@ -115,6 +115,125 @@ function renderProjects(projects, activeCategory = "All") {
   });
 }
 
+function initCommandPalette(data) {
+  const palette = document.getElementById("command-palette");
+  const input = document.getElementById("palette-input");
+  const results = document.getElementById("palette-results");
+  const openBtn = document.getElementById("palette-open");
+  if (!palette || !input || !results) return;
+
+  const email = data.meta?.email ? `mailto:${data.meta.email}` : "#";
+  const commands = [
+    { title: "projects/", detail: "Selected work", action: () => goTo("#projects") },
+    { title: "snake/", detail: "Canvas game", action: () => goTo("#lab") },
+    { title: "about/", detail: "Focus areas and coursework", action: () => goTo("#about") },
+    { title: "Open resume", detail: "PDF", action: () => openLink(data.meta?.resumeUrl) },
+    { title: "Open GitHub", detail: data.meta?.githubUrl, action: () => openLink(data.meta?.githubUrl) },
+    { title: "Email Jacob", detail: data.meta?.email, action: () => openLink(email, false) },
+    ...(data.projects || []).map((project) => ({
+      title: project.title,
+      detail: `${project.category || "Project"} · ${project.status || "GitHub"}`,
+      action: () => {
+        const repo = (project.links || []).find((link) => link.label.toLowerCase() === "repo") || project.links?.[0];
+        openLink(repo?.url);
+      },
+    })),
+  ];
+
+  let activeIndex = 0;
+  let visibleCommands = commands;
+
+  function goTo(hash) {
+    closePalette();
+    document.querySelector(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function openLink(url, newTab = true) {
+    if (!url) return;
+    closePalette();
+    if (newTab && !url.startsWith("mailto:")) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else {
+      window.location.href = url;
+    }
+  }
+
+  function render() {
+    const query = input.value.trim().toLowerCase();
+    visibleCommands = commands.filter((command) => {
+      return `${command.title} ${command.detail}`.toLowerCase().includes(query);
+    });
+    activeIndex = Math.min(activeIndex, Math.max(visibleCommands.length - 1, 0));
+    results.innerHTML = "";
+
+    if (!visibleCommands.length) {
+      const empty = document.createElement("div");
+      empty.className = "palette-empty";
+      empty.textContent = "No commands found";
+      results.appendChild(empty);
+      return;
+    }
+
+    visibleCommands.forEach((command, index) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = `palette-item${index === activeIndex ? " active" : ""}`;
+      item.innerHTML = `<span>${command.title}</span><small>${command.detail || ""}</small>`;
+      item.addEventListener("mouseenter", () => {
+        activeIndex = index;
+        render();
+      });
+      item.addEventListener("click", command.action);
+      results.appendChild(item);
+    });
+  }
+
+  function openPalette() {
+    palette.hidden = false;
+    input.value = "";
+    activeIndex = 0;
+    render();
+    requestAnimationFrame(() => input.focus());
+  }
+
+  function closePalette() {
+    palette.hidden = true;
+  }
+
+  if (openBtn) openBtn.addEventListener("click", openPalette);
+  input.addEventListener("input", () => {
+    activeIndex = 0;
+    render();
+  });
+  palette.addEventListener("click", (event) => {
+    if (event.target === palette) closePalette();
+  });
+  document.addEventListener("keydown", (event) => {
+    const isShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
+    if (isShortcut) {
+      event.preventDefault();
+      openPalette();
+      return;
+    }
+    if (palette.hidden) return;
+    if (event.key === "Escape") closePalette();
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      activeIndex = Math.min(activeIndex + 1, visibleCommands.length - 1);
+      render();
+    }
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      activeIndex = Math.max(activeIndex - 1, 0);
+      render();
+    }
+    if (event.key === "Enter" && visibleCommands[activeIndex]) {
+      event.preventDefault();
+      visibleCommands[activeIndex].action();
+    }
+  });
+}
+
 function initSignalCanvas() {
   const canvas = document.getElementById("signal-canvas");
   if (!canvas) return;
@@ -249,8 +368,8 @@ async function init() {
   setHref("linkedin", data.meta?.linkedinUrl);
   setImage("avatar", data.meta?.avatarUrl);
 
-  renderList("current-list", data.currentClasses || []);
-  renderList("previous-list", data.previousCoursework || []);
+  renderList("focus-list", data.focusAreas || []);
+  renderList("coursework-list", data.completedCoursework || []);
   const applyFilter = (category) => {
     activeCategory = category;
     renderFilters(projects, activeCategory, applyFilter);
@@ -259,6 +378,7 @@ async function init() {
   renderFilters(projects, activeCategory, applyFilter);
   renderProjects(projects, activeCategory);
   initRepoMap(projects);
+  initCommandPalette(data);
 }
 
 initSignalCanvas();

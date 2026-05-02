@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#08100f" />
     <meta
       name="description"
-      content="Jacob Kirk's software engineering portfolio: production web apps, developer tools, network tooling, and MCP projects."
+      content="Jacob Kirk's portfolio: full-stack applications, developer tools, network projects, and security-minded systems work."
     />
     <title>Jacob Kirk | Software Engineer</title>
     <link
@@ -32,18 +32,19 @@
             <span>Jacob Kirk</span>
           </a>
           <div class="nav-links">
-            <a href="#projects">Projects</a>
-            <a href="#about">About</a>
-            <a href="#lab">Lab</a>
-            <a href="#contact">Contact</a>
+            <a href="#projects">projects/</a>
+            <a href="#about">about/</a>
+            <a href="#lab">snake/</a>
+            <a href="#contact">contact/</a>
+            <button id="palette-open" class="nav-command" type="button" aria-haspopup="dialog">⌘K</button>
           </div>
         </nav>
 
         <section class="hero-grid">
           <div class="hero-copy">
-            <p class="eyebrow">CS @ UCF / software systems / security-minded builds</p>
+            <p class="eyebrow">~/ucf/cs · apps · networks · tools</p>
             <h1 id="name">Jacob Kirk</h1>
-            <p id="tagline" class="tagline">Software Engineer building useful, sharp, production-ready tools.</p>
+            <p id="tagline" class="tagline">I build web apps, command-line tools, and network-aware systems.</p>
             <p id="hero-summary" class="hero-summary"></p>
             <div class="hero-actions">
               <a id="github" class="btn primary" href="#" target="_blank" rel="noreferrer">GitHub</a>
@@ -60,7 +61,7 @@
               </div>
               <div>
                 <span class="mono">driverext</span>
-                <strong>Active builder profile</strong>
+                <strong>Project map</strong>
               </div>
             </div>
             <canvas id="repo-map" width="520" height="340" aria-label="Animated map of Jacob's projects"></canvas>
@@ -75,23 +76,23 @@
       <section class="metrics" aria-label="Portfolio highlights">
         <article>
           <span id="metric-projects">0</span>
-          <p>Public builds surfaced from GitHub</p>
+          <p>Public repositories in this index</p>
         </article>
         <article>
           <span id="metric-stack">0</span>
-          <p>Languages and platform pieces in play</p>
+          <p>Languages, services, and tools used</p>
         </article>
         <article>
-          <span>2026</span>
-          <p>Latest project activity window</p>
+          <span>OS + DS</span>
+          <p>Completed systems coursework</p>
         </article>
       </section>
 
       <section class="section projects-section" id="projects">
         <div class="section-header split">
           <div>
-            <p class="eyebrow">Selected GitHub Work</p>
-            <h2>Projects With Teeth</h2>
+            <p class="eyebrow">projects/</p>
+            <h2>Selected work</h2>
           </div>
           <div class="filters" id="project-filters" aria-label="Project filters"></div>
         </div>
@@ -100,18 +101,18 @@
 
       <section class="section about-section" id="about">
         <div class="about-copy">
-          <p class="eyebrow">About</p>
-          <h2>I like software that has a real job.</h2>
+          <p class="eyebrow">about/</p>
+          <h2>I like practical software with clear constraints.</h2>
           <p id="about-body"></p>
         </div>
         <div class="course-panel">
           <div>
             <h3>Current Focus</h3>
-            <ul id="current-list" class="list"></ul>
+            <ul id="focus-list" class="list"></ul>
           </div>
           <div>
-            <h3>Foundation</h3>
-            <ul id="previous-list" class="list compact"></ul>
+            <h3>Completed Coursework</h3>
+            <ul id="coursework-list" class="list compact"></ul>
           </div>
         </div>
       </section>
@@ -119,10 +120,10 @@
       <section class="section lab-section" id="lab">
         <div class="section-header split">
           <div>
-            <p class="eyebrow">Interactive Lab</p>
-            <h2>Snake, But Make It Portfolio</h2>
+            <p class="eyebrow">snake/</p>
+            <h2>Snake</h2>
           </div>
-          <p class="section-sub">A small reflex check because portfolios should have a pulse.</p>
+          <p class="section-sub">A small canvas game tucked into the site. Arrow keys or WASD.</p>
         </div>
         <div class="game-shell">
           <canvas id="snake-canvas" width="480" height="320" aria-label="Snake game" tabindex="0"></canvas>
@@ -146,7 +147,7 @@
 
       <footer class="footer" id="contact">
         <div>
-          <strong>Build something useful together?</strong>
+          <strong>Open to roles where software meets systems, infrastructure, or security.</strong>
           <p id="location"></p>
         </div>
         <div class="footer-links">
@@ -156,6 +157,16 @@
         </div>
       </footer>
     </main>
+
+    <div id="command-palette" class="palette" role="dialog" aria-modal="true" aria-label="Command palette" hidden>
+      <div class="palette-panel">
+        <div class="palette-search">
+          <span>⌘K</span>
+          <input id="palette-input" type="text" placeholder="Search projects, links, and sections" autocomplete="off" />
+        </div>
+        <div id="palette-results" class="palette-results" role="listbox"></div>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>

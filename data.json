@@ -2,8 +2,8 @@
   "meta": {
     "name": "Jacob Kirk",
     "handle": "driverext",
-    "tagline": "Software Engineer | CS @ UCF",
-    "summary": "I build full-stack products, developer tools, and systems utilities with a strong interest in security, privacy, and reliability. Recent work spans Angular/Supabase production apps, local-dev automation, chargeback tooling, traceroute visualization, and MCP infrastructure.",
+    "tagline": "CS @ UCF",
+    "summary": "I like building things that have to work outside a demo: booking flows, payment paths, local dev tools, SSH automation, and network visualizers. I am drawn to the parts of software where reliability, privacy, and clear interfaces all matter.",
     "email": "kirkjcs@gmail.com",
     "location": "Orlando, FL",
     "resumeUrl": "RESUME.pdf",
@@ -13,14 +13,18 @@
     "lastProjectRefresh": "May 2, 2026"
   },
   "about": {
-    "body": "I am a Computer Science major at the University of Central Florida focused on software development, security-minded systems, and tools that reduce friction for real users. I am especially interested in secure application design, network visibility, privacy-preserving workflows, and the kind of defensive engineering that keeps products dependable under pressure. I care about crisp interfaces, boring reliability, and codebases that another engineer can understand without a guided tour. I am looking for engineering opportunities where I can contribute quickly, keep learning from strong teammates, and ship work that earns its place."
+    "body": "I am a Computer Science major at the University of Central Florida. Most of my projects sit somewhere between product engineering and lower-level systems work: web apps with real users, tools that automate annoying setup, SSH/MCP experiments, and network diagnostics. I have completed Operating Systems and Parallel and Distributed Programming, and I am interested in work where authentication, payments, privacy, infrastructure, and maintainability are not afterthoughts."
   },
-  "currentClasses": [
-    "Operating Systems",
-    "Parallel and Distributed Programming"
+  "focusAreas": [
+    "Application security and privacy",
+    "Network diagnostics",
+    "Developer tooling",
+    "Reliable product workflows"
   ],
-  "previousCoursework": [
+  "completedCoursework": [
     "Computer Science I/II (DS&A)",
+    "Operating Systems",
+    "Parallel and Distributed Programming",
     "Artificial Intelligence",
     "Enterprise Computing",
     "Cyber Defense Analysis",
@@ -31,7 +35,7 @@
       "title": "A-WELL Yoga",
       "repoName": "awellyoga",
       "status": "Production",
-      "description": "Production site for A-WELL Yoga with marketing pages, live class booking, capacity tracking, internal attendance tools, Sanity content editing, Supabase Edge Functions, and Stripe checkout.",
+      "description": "Production Angular site for a yoga studio: content editing, class booking, capacity tracking, internal attendance tools, Supabase functions, and Stripe checkout.",
       "stack": ["Angular", "TypeScript", "Sanity", "Supabase", "Stripe", "Secure Payments"],
       "category": "Product",
       "updated": "2026-05-01",
@@ -44,7 +48,7 @@
       "title": "DisputeShield",
       "repoName": "disputeshield",
       "status": "Live SaaS",
-      "description": "Zero-budget browser SaaS that generates bank-ready chargeback evidence packets as PDF and ZIP files without uploading merchant files to a server, keeping sensitive evidence local to the browser.",
+      "description": "Browser-based chargeback packet builder. It generates PDF and ZIP evidence packets while keeping merchant files local instead of uploading them to an app server.",
       "stack": ["TypeScript", "Cloudflare Pages", "PDF", "Privacy-first UX"],
       "category": "Product",
       "updated": "2026-02-17",
@@ -57,7 +61,7 @@
       "title": "Eustis MCP",
       "repoName": "eustis-mcp",
       "status": "Tooling",
-      "description": "Unofficial MCP server for UCF's Eustis Linux server with SSH command execution, SCP transfer, runtime diagnostics, and a bridge mode for sandboxed MCP clients.",
+      "description": "Unofficial MCP server for UCF's Eustis Linux server with SSH commands, SCP transfer, runtime diagnostics, and bridge mode for sandboxed clients.",
       "stack": ["Python", "MCP", "SSH", "SCP", "Sandboxing"],
       "category": "Systems",
       "updated": "2026-04-18",
@@ -69,7 +73,7 @@
       "title": "Devup",
       "repoName": "devup",
       "status": "CLI",
-      "description": "Local development orchestrator that detects project dependencies, generates Docker Compose and env files, starts services, and verifies health from one command.",
+      "description": "CLI for local development setup. It detects dependencies, writes Docker Compose and env files, starts services, and checks health from one command.",
       "stack": ["Node.js", "JavaScript", "Docker", "Docker Compose"],
       "category": "Developer Tools",
       "updated": "2026-02-03",
@@ -81,7 +85,7 @@
       "title": "NetTrace",
       "repoName": "NetTrace",
       "status": "Network Lab",
-      "description": "TCP-first traceroute visualizer with live hop streaming, geolocation, ASN/WHOIS enrichment, hop classification, export tools, and a Leaflet map UI for network visibility.",
+      "description": "TCP-first traceroute visualizer with streamed hops, geolocation, ASN/WHOIS enrichment, hop labels, exports, and a Leaflet map UI.",
       "stack": ["Python", "Flask", "Scapy", "Network Analysis", "SSE", "Leaflet"],
       "category": "Systems",
       "updated": "2026-02-03",
@@ -94,7 +98,7 @@
       "title": "Portfolio Website",
       "repoName": "portfolio-jacob",
       "status": "This Site",
-      "description": "A static, data-driven portfolio with an animated repo map, project filters, responsive layout, and a playable Snake mini-game.",
+      "description": "Static portfolio with project filters, a keyboard command palette, responsive layout, and a playable canvas Snake mini-game.",
       "stack": ["HTML", "CSS", "JavaScript", "Canvas"],
       "category": "Frontend",
       "updated": "2026-02-03",
