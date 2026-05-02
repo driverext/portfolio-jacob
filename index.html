@@ -1,59 +1,130 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SWE Portfolio</title>
+    <meta name="theme-color" content="#08100f" />
+    <meta
+      name="description"
+      content="Jacob Kirk's software engineering portfolio: production web apps, developer tools, network tooling, and MCP projects."
+    />
+    <title>Jacob Kirk | Software Engineer</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2370f5c5'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='monospace' font-size='24' font-weight='700' fill='%2307100f'%3EJK%3C/text%3E%3C/svg%3E"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="bg">
-      <div class="glow glow-1"></div>
-      <div class="glow glow-2"></div>
-      <div class="scanlines"></div>
-      <div class="grid"></div>
-    </div>
+    <canvas id="signal-canvas" aria-hidden="true"></canvas>
 
     <main class="page">
-      <header class="hero">
-        <div class="hero-text">
-          <p class="eyebrow">Software Engineering Portfolio</p>
-          <h1 id="name">Your Name</h1>
-          <p id="tagline" class="tagline">Software Engineer | Student</p>
-          <div class="hero-actions">
-            <a id="resume" class="btn primary" href="#" target="_blank" rel="noreferrer">Resume</a>
-            <a id="email" class="btn ghost" href="#">Email</a>
+      <header class="hero" id="top">
+        <nav class="nav" aria-label="Primary navigation">
+          <a class="brand" href="#top" aria-label="Jacob Kirk home">
+            <span class="brand-mark">JK</span>
+            <span>Jacob Kirk</span>
+          </a>
+          <div class="nav-links">
+            <a href="#projects">Projects</a>
+            <a href="#about">About</a>
+            <a href="#lab">Lab</a>
+            <a href="#contact">Contact</a>
           </div>
-          <div class="hero-links">
-            <a id="github" href="#" target="_blank" rel="noreferrer">GitHub</a>
-            <span>•</span>
-            <a id="linkedin" href="#" target="_blank" rel="noreferrer">LinkedIn</a>
-          </div>
-        </div>
-        <div class="hero-card">
-          <div class="terminal">
-            <div class="terminal-bar">
-              <span></span><span></span><span></span>
-              <p>active-context</p>
+        </nav>
+
+        <section class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">CS @ UCF / software systems / security-minded builds</p>
+            <h1 id="name">Jacob Kirk</h1>
+            <p id="tagline" class="tagline">Software Engineer building useful, sharp, production-ready tools.</p>
+            <p id="hero-summary" class="hero-summary"></p>
+            <div class="hero-actions">
+              <a id="github" class="btn primary" href="#" target="_blank" rel="noreferrer">GitHub</a>
+              <a id="resume" class="btn ghost" href="#" target="_blank" rel="noreferrer">Resume</a>
+              <a id="email" class="btn quiet" href="#">Email</a>
             </div>
-            <div class="terminal-body">
-              <p><span class="prompt">></span> focus --now</p>
-              <ul id="current-classes" class="pill-list"></ul>
-              <p class="terminal-note">Currently learning + shipping.</p>
-            </div>
           </div>
-        </div>
+
+          <aside class="command-deck" aria-label="Portfolio signal deck">
+            <div class="profile-strip">
+              <div class="avatar-frame">
+                <span>JK</span>
+                <img id="avatar" alt="Jacob Kirk GitHub avatar" />
+              </div>
+              <div>
+                <span class="mono">driverext</span>
+                <strong>Active builder profile</strong>
+              </div>
+            </div>
+            <canvas id="repo-map" width="520" height="340" aria-label="Animated map of Jacob's projects"></canvas>
+            <div class="deck-status">
+              <span class="pulse"></span>
+              <span id="last-updated">GitHub projects refreshed</span>
+            </div>
+          </aside>
+        </section>
       </header>
 
-      <section class="game">
-        <div class="section-header">
-          <h2>Snake Challenge</h2>
-          <p class="section-sub">Quick reflex check. Use arrow keys or WASD. Eat the core.</p>
+      <section class="metrics" aria-label="Portfolio highlights">
+        <article>
+          <span id="metric-projects">0</span>
+          <p>Public builds surfaced from GitHub</p>
+        </article>
+        <article>
+          <span id="metric-stack">0</span>
+          <p>Languages and platform pieces in play</p>
+        </article>
+        <article>
+          <span>2026</span>
+          <p>Latest project activity window</p>
+        </article>
+      </section>
+
+      <section class="section projects-section" id="projects">
+        <div class="section-header split">
+          <div>
+            <p class="eyebrow">Selected GitHub Work</p>
+            <h2>Projects With Teeth</h2>
+          </div>
+          <div class="filters" id="project-filters" aria-label="Project filters"></div>
         </div>
-        <div class="game-card">
+        <div id="projects-grid" class="project-grid"></div>
+      </section>
+
+      <section class="section about-section" id="about">
+        <div class="about-copy">
+          <p class="eyebrow">About</p>
+          <h2>I like software that has a real job.</h2>
+          <p id="about-body"></p>
+        </div>
+        <div class="course-panel">
+          <div>
+            <h3>Current Focus</h3>
+            <ul id="current-list" class="list"></ul>
+          </div>
+          <div>
+            <h3>Foundation</h3>
+            <ul id="previous-list" class="list compact"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section lab-section" id="lab">
+        <div class="section-header split">
+          <div>
+            <p class="eyebrow">Interactive Lab</p>
+            <h2>Snake, But Make It Portfolio</h2>
+          </div>
+          <p class="section-sub">A small reflex check because portfolios should have a pulse.</p>
+        </div>
+        <div class="game-shell">
           <canvas id="snake-canvas" width="480" height="320" aria-label="Snake game" tabindex="0"></canvas>
           <div class="game-panel">
             <div class="game-stat">
@@ -64,54 +135,25 @@
               <span>Best</span>
               <strong id="snake-best">0</strong>
             </div>
-            <div class="game-status" id="snake-status">Click the board to focus, then press Start.</div>
+            <p class="game-status" id="snake-status">Click the board to focus, then press Start.</p>
             <div class="game-controls">
               <button id="snake-start" class="btn primary" type="button">Start</button>
-              <button id="snake-reset" class="btn ghost" type="button">Reset</button>
+              <button id="snake-reset" class="btn quiet" type="button">Reset</button>
             </div>
-            <p class="game-hint">Tap start, then arrow keys or WASD. Don’t hit the walls.</p>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="section-header">
-          <h2>About Me</h2>
-          <p class="section-sub">Quick snapshot of what I care about and how I work.</p>
+      <footer class="footer" id="contact">
+        <div>
+          <strong>Build something useful together?</strong>
+          <p id="location"></p>
         </div>
-        <div class="about-card">
-          <p id="about-body"></p>
+        <div class="footer-links">
+          <a id="footer-github" href="#" target="_blank" rel="noreferrer">GitHub</a>
+          <a id="linkedin" href="#" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a id="footer-email" href="#">Email</a>
         </div>
-      </section>
-
-      <section class="section">
-        <div class="section-header">
-          <h2>Coursework</h2>
-          <p class="section-sub">What I am working through now and the foundation behind it.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card">
-            <h3>Current Classes</h3>
-            <ul id="current-list" class="list"></ul>
-          </div>
-          <div class="course-card">
-            <h3>Previous Coursework</h3>
-            <ul id="previous-list" class="list"></ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-header">
-          <h2>Projects</h2>
-          <p class="section-sub">Active work and recent builds with live links.</p>
-        </div>
-        <div id="projects" class="project-grid"></div>
-      </section>
-
-      <footer class="footer">
-        <p id="location"></p>
-        <p>Built for easy updates. Edit <span class="file">data.json</span> only.</p>
       </footer>
     </main>
 

@@ -1,27 +1,31 @@
-﻿async function loadData() {
+async function loadData() {
   const res = await fetch("data.json");
-  if (!res.ok) {
-    throw new Error("Failed to load data.json");
-  }
+  if (!res.ok) throw new Error("Failed to load data.json");
   return res.json();
 }
 
 function setText(id, value) {
   const el = document.getElementById(id);
-  if (el) {
-    el.textContent = value ?? "";
-  }
+  if (el) el.textContent = value ?? "";
 }
 
 function setHref(id, value) {
   const el = document.getElementById(id);
-  if (el) {
-    if (value && value !== "#") {
-      el.href = value;
-    } else {
-      el.removeAttribute("href");
-    }
+  if (!el) return;
+  if (value && value !== "#") {
+    el.href = value;
+  } else {
+    el.removeAttribute("href");
   }
+}
+
+function setImage(id, value) {
+  const el = document.getElementById(id);
+  if (!el || !value) return;
+  el.addEventListener("error", () => {
+    el.style.display = "none";
+  });
+  el.src = value;
 }
 
 function renderList(listId, items) {
@@ -35,41 +39,44 @@ function renderList(listId, items) {
   });
 }
 
-function renderPills(listId, items) {
-  const list = document.getElementById(listId);
-  if (!list) return;
-  list.innerHTML = "";
-  items.forEach((item) => {
-    const li = document.createElement("li");
-    li.className = "pill";
-    li.textContent = item;
-    list.appendChild(li);
+function uniqueStack(projects) {
+  return [...new Set(projects.flatMap((project) => project.stack || []))];
+}
+
+function renderFilters(projects, activeCategory, onPick) {
+  const mount = document.getElementById("project-filters");
+  if (!mount) return;
+  const categories = ["All", ...new Set(projects.map((project) => project.category).filter(Boolean))];
+  mount.innerHTML = "";
+  categories.forEach((category) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `filter-btn${category === activeCategory ? " active" : ""}`;
+    button.textContent = category;
+    button.addEventListener("click", () => onPick(category));
+    mount.appendChild(button);
   });
 }
 
-function renderProjects(projects) {
-  const grid = document.getElementById("projects");
+function renderProjects(projects, activeCategory = "All") {
+  const grid = document.getElementById("projects-grid");
   if (!grid) return;
+  const visible = activeCategory === "All" ? projects : projects.filter((project) => project.category === activeCategory);
   grid.innerHTML = "";
 
-  projects.forEach((project) => {
+  visible.forEach((project, index) => {
     const card = document.createElement("article");
-    card.className = "project-card";
+    card.className = `project-card${index === 0 && activeCategory === "All" ? " featured" : ""}`;
+
+    const main = document.createElement("div");
+    main.className = "project-main";
+
+    const kicker = document.createElement("div");
+    kicker.className = "project-kicker";
+    kicker.innerHTML = `<span>${project.status || "Project"}</span><span>${project.repoName || ""}</span>`;
 
     const title = document.createElement("h3");
     title.textContent = project.title;
-
-    const meta = document.createElement("div");
-    meta.className = "project-meta";
-
-    const status = document.createElement("span");
-    status.textContent = project.status || "";
-
-    const metaRight = document.createElement("span");
-    metaRight.textContent = (project.stack || []).join(" • ");
-
-    meta.appendChild(status);
-    meta.appendChild(metaRight);
 
     const desc = document.createElement("p");
     desc.textContent = project.description;
@@ -82,6 +89,15 @@ function renderProjects(projects) {
       stack.appendChild(tag);
     });
 
+    main.append(kicker, title, desc, stack);
+
+    const foot = document.createElement("div");
+    foot.className = "project-foot";
+
+    const date = document.createElement("span");
+    date.className = "project-date";
+    date.textContent = project.updated ? `Updated ${project.updated}` : "";
+
     const links = document.createElement("div");
     links.className = "project-links";
     (project.links || []).forEach((link) => {
@@ -93,37 +109,160 @@ function renderProjects(projects) {
       links.appendChild(a);
     });
 
-    card.appendChild(title);
-    card.appendChild(meta);
-    card.appendChild(desc);
-    card.appendChild(stack);
-    card.appendChild(links);
+    foot.append(date, links);
+    card.append(main, foot);
     grid.appendChild(card);
   });
 }
 
+function initSignalCanvas() {
+  const canvas = document.getElementById("signal-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let width = 0;
+  let height = 0;
+  let nodes = [];
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    nodes = Array.from({ length: Math.min(80, Math.floor(width / 18)) }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18,
+    }));
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, width, height);
+    nodes.forEach((node, index) => {
+      node.x += node.vx;
+      node.y += node.vy;
+      if (node.x < 0 || node.x > width) node.vx *= -1;
+      if (node.y < 0 || node.y > height) node.vy *= -1;
+
+      for (let i = index + 1; i < nodes.length; i += 1) {
+        const other = nodes[i];
+        const dx = node.x - other.x;
+        const dy = node.y - other.y;
+        const distance = Math.hypot(dx, dy);
+        if (distance < 145) {
+          ctx.strokeStyle = `rgba(112, 245, 197, ${0.11 * (1 - distance / 145)})`;
+          ctx.beginPath();
+          ctx.moveTo(node.x, node.y);
+          ctx.lineTo(other.x, other.y);
+          ctx.stroke();
+        }
+      }
+    });
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+  frame();
+}
+
+function initRepoMap(projects) {
+  const canvas = document.getElementById("repo-map");
+  if (!canvas || !projects.length) return;
+  const ctx = canvas.getContext("2d");
+  let tick = 0;
+  const colors = ["#70f5c5", "#f3ba5d", "#ff7c6e", "#75a7ff", "#d4f27a", "#f3f0df"];
+
+  function draw() {
+    const { width, height } = canvas;
+    const cx = width / 2;
+    const cy = height / 2;
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
+    for (let r = 58; r <= 150; r += 46) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = "#70f5c5";
+    ctx.beginPath();
+    ctx.arc(cx, cy, 9, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.font = "700 13px JetBrains Mono";
+    ctx.fillText("driverext", cx - 34, cy + 30);
+
+    projects.forEach((project, index) => {
+      const angle = tick * 0.006 + (index / projects.length) * Math.PI * 2;
+      const radius = 78 + (index % 3) * 34;
+      const x = cx + Math.cos(angle) * radius;
+      const y = cy + Math.sin(angle) * radius * 0.72;
+
+      ctx.strokeStyle = "rgba(112,245,197,0.18)";
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+
+      ctx.fillStyle = colors[index % colors.length];
+      ctx.beginPath();
+      ctx.arc(x, y, index === 0 ? 8 : 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = "rgba(236,246,241,0.82)";
+      ctx.font = "600 11px JetBrains Mono";
+      ctx.fillText(project.repoName || project.title, x + 10, y + 4);
+    });
+
+    tick += 1;
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+}
+
 async function init() {
   const data = await loadData();
+  const projects = data.projects || [];
+  let activeCategory = "All";
+
   setText("name", data.meta?.name);
   setText("tagline", data.meta?.tagline);
+  setText("hero-summary", data.meta?.summary);
   setText("about-body", data.about?.body);
   setText("location", data.meta?.location);
+  setText("last-updated", `GitHub projects refreshed ${data.meta?.lastProjectRefresh || ""}`);
+  setText("metric-projects", projects.length);
+  setText("metric-stack", uniqueStack(projects).length);
 
   const email = data.meta?.email ? `mailto:${data.meta.email}` : "#";
   setHref("email", email);
+  setHref("footer-email", email);
   setHref("resume", data.meta?.resumeUrl);
   setHref("github", data.meta?.githubUrl);
+  setHref("footer-github", data.meta?.githubUrl);
   setHref("linkedin", data.meta?.linkedinUrl);
+  setImage("avatar", data.meta?.avatarUrl);
 
-  renderPills("current-classes", data.currentClasses || []);
   renderList("current-list", data.currentClasses || []);
   renderList("previous-list", data.previousCoursework || []);
-  renderProjects(data.projects || []);
+  const applyFilter = (category) => {
+    activeCategory = category;
+    renderFilters(projects, activeCategory, applyFilter);
+    renderProjects(projects, activeCategory);
+  };
+  renderFilters(projects, activeCategory, applyFilter);
+  renderProjects(projects, activeCategory);
+  initRepoMap(projects);
 }
 
-init().catch((err) => {
-  console.error(err);
-});
+initSignalCanvas();
+init().catch((err) => console.error(err));
 
 function initSnake() {
   const canvas = document.getElementById("snake-canvas");
@@ -146,20 +285,6 @@ function initSnake() {
   let running = false;
   let timer = null;
 
-  function resetGame() {
-    snake = [
-      { x: 6, y: 8 },
-      { x: 5, y: 8 },
-      { x: 4, y: 8 },
-    ];
-    dir = { x: 1, y: 0 };
-    score = 0;
-    placeFood();
-    updateScore();
-    setStatus("Ready. Press Start or use an arrow key.");
-    draw();
-  }
-
   function updateScore() {
     if (scoreEl) scoreEl.textContent = score;
     if (bestEl) bestEl.textContent = best;
@@ -174,6 +299,67 @@ function initSnake() {
       };
     } while (snake.some((s) => s.x === pos.x && s.y === pos.y));
     food = pos;
+  }
+
+  function setStatus(message) {
+    if (statusEl) statusEl.textContent = message;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#050909";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.strokeStyle = "rgba(112,245,197,0.08)";
+    for (let x = 0; x <= cols; x += 1) {
+      ctx.beginPath();
+      ctx.moveTo(x * size, 0);
+      ctx.lineTo(x * size, canvas.height);
+      ctx.stroke();
+    }
+    for (let y = 0; y <= rows; y += 1) {
+      ctx.beginPath();
+      ctx.moveTo(0, y * size);
+      ctx.lineTo(canvas.width, y * size);
+      ctx.stroke();
+    }
+
+    snake.forEach((s, idx) => {
+      const inset = idx === 0 ? 2 : 3;
+      ctx.fillStyle = idx === 0 ? "#70f5c5" : "#43c99e";
+      ctx.fillRect(s.x * size + inset, s.y * size + inset, size - inset * 2, size - inset * 2);
+    });
+
+    ctx.fillStyle = "#f3ba5d";
+    ctx.beginPath();
+    ctx.arc(food.x * size + size / 2, food.y * size + size / 2, size / 3, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function resetGame() {
+    snake = [
+      { x: 6, y: 8 },
+      { x: 5, y: 8 },
+      { x: 4, y: 8 },
+    ];
+    dir = { x: 1, y: 0 };
+    score = 0;
+    placeFood();
+    updateScore();
+    setStatus("Ready. Press Start or use an arrow key.");
+    draw();
+  }
+
+  function stopGame() {
+    running = false;
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+
+  function gameOver(message) {
+    stopGame();
+    setStatus(message);
+    resetGame();
   }
 
   function step() {
@@ -201,58 +387,12 @@ function initSnake() {
     draw();
   }
 
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#06090f";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = "rgba(94, 242, 214, 0.08)";
-    for (let x = 0; x <= cols; x += 1) {
-      ctx.beginPath();
-      ctx.moveTo(x * size, 0);
-      ctx.lineTo(x * size, canvas.height);
-      ctx.stroke();
-    }
-    for (let y = 0; y <= rows; y += 1) {
-      ctx.beginPath();
-      ctx.moveTo(0, y * size);
-      ctx.lineTo(canvas.width, y * size);
-      ctx.stroke();
-    }
-
-    ctx.fillStyle = "#5ef2d6";
-    snake.forEach((s, idx) => {
-      const inset = idx === 0 ? 2 : 3;
-      ctx.fillRect(s.x * size + inset, s.y * size + inset, size - inset * 2, size - inset * 2);
-    });
-
-    ctx.fillStyle = "#ffb454";
-    ctx.beginPath();
-    ctx.arc(food.x * size + size / 2, food.y * size + size / 2, size / 3, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
   function startGame() {
     if (running) return;
+    canvas.focus();
     running = true;
     setStatus("In progress...");
-    timer = setInterval(step, 110);
-  }
-
-  function stopGame() {
-    running = false;
-    if (timer) clearInterval(timer);
-    timer = null;
-  }
-
-  function gameOver(message) {
-    stopGame();
-    setStatus(message);
-    resetGame();
-  }
-
-  function setStatus(message) {
-    if (statusEl) statusEl.textContent = message;
+    timer = setInterval(step, 105);
   }
 
   function setDir(x, y) {
@@ -261,36 +401,18 @@ function initSnake() {
   }
 
   function handleKey(e) {
-    switch (e.key.toLowerCase()) {
-      case "arrowup":
-      case "w":
-        e.preventDefault();
-        setDir(0, -1);
-        break;
-      case "arrowdown":
-      case "s":
-        e.preventDefault();
-        setDir(0, 1);
-        break;
-      case "arrowleft":
-      case "a":
-        e.preventDefault();
-        setDir(-1, 0);
-        break;
-      case "arrowright":
-      case "d":
-        e.preventDefault();
-        setDir(1, 0);
-        break;
-      default:
-        return;
-    }
+    const key = e.key.toLowerCase();
+    if (key === "arrowup" || key === "w") setDir(0, -1);
+    else if (key === "arrowdown" || key === "s") setDir(0, 1);
+    else if (key === "arrowleft" || key === "a") setDir(-1, 0);
+    else if (key === "arrowright" || key === "d") setDir(1, 0);
+    else return;
+    e.preventDefault();
     if (!running) startGame();
   }
 
   canvas.addEventListener("keydown", handleKey);
   canvas.addEventListener("click", () => canvas.focus());
-
   if (startBtn) startBtn.addEventListener("click", startGame);
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
@@ -299,7 +421,6 @@ function initSnake() {
     });
   }
 
-  if (bestEl) bestEl.textContent = best;
   resetGame();
 }
 

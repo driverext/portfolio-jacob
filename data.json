@@ -1,16 +1,19 @@
-﻿{
+{
   "meta": {
     "name": "Jacob Kirk",
+    "handle": "driverext",
     "tagline": "Software Engineer | CS @ UCF",
+    "summary": "I build full-stack products, developer tools, and systems utilities with a strong interest in security, privacy, and reliability. Recent work spans Angular/Supabase production apps, local-dev automation, chargeback tooling, traceroute visualization, and MCP infrastructure.",
     "email": "kirkjcs@gmail.com",
     "location": "Orlando, FL",
     "resumeUrl": "RESUME.pdf",
     "githubUrl": "https://github.com/driverext",
-    "linkedinUrl": "https://www.linkedin.com/in/kirkjcs/"
+    "linkedinUrl": "https://www.linkedin.com/in/kirkjcs/",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/69075279?v=4",
+    "lastProjectRefresh": "May 2, 2026"
   },
   "about": {
-    "headline": "About Me",
-    "body": "I am a Computer Science major at the University of Central Florida with a strong interest in software development, machine learning, and security engineering. I focus on building reliable, maintainable systems and enjoy turning complex problems into clean, user-centered solutions. Outside of coursework and projects, I am an active member of the Delta Tau Delta fraternity, which has strengthened my teamwork, leadership, and communication skills. I am looking for opportunities where I can contribute quickly, learn from experienced engineers, and grow into a well-rounded software professional."
+    "body": "I am a Computer Science major at the University of Central Florida focused on software development, security-minded systems, and tools that reduce friction for real users. I am especially interested in secure application design, network visibility, privacy-preserving workflows, and the kind of defensive engineering that keeps products dependable under pressure. I care about crisp interfaces, boring reliability, and codebases that another engineer can understand without a guided tour. I am looking for engineering opportunities where I can contribute quickly, keep learning from strong teammates, and ship work that earns its place."
   },
   "currentClasses": [
     "Operating Systems",
@@ -25,41 +28,79 @@
   ],
   "projects": [
     {
-      "title": "Net Trace",
-      "status": "In Progress",
-      "description": "A full-stack web app that tracks personal finance with automated insights.",
-      "stack": ["Python", "Flask", "Scapy", "HTML/CSS", "JavaScript", "Leaflet.js"],
+      "title": "A-WELL Yoga",
+      "repoName": "awellyoga",
+      "status": "Production",
+      "description": "Production site for A-WELL Yoga with marketing pages, live class booking, capacity tracking, internal attendance tools, Sanity content editing, Supabase Edge Functions, and Stripe checkout.",
+      "stack": ["Angular", "TypeScript", "Sanity", "Supabase", "Stripe", "Secure Payments"],
+      "category": "Product",
+      "updated": "2026-05-01",
+      "links": [
+        { "label": "Repo", "url": "https://github.com/driverext/awellyoga" },
+        { "label": "Live Site", "url": "https://awellyoga.com" }
+      ]
+    },
+    {
+      "title": "DisputeShield",
+      "repoName": "disputeshield",
+      "status": "Live SaaS",
+      "description": "Zero-budget browser SaaS that generates bank-ready chargeback evidence packets as PDF and ZIP files without uploading merchant files to a server, keeping sensitive evidence local to the browser.",
+      "stack": ["TypeScript", "Cloudflare Pages", "PDF", "Privacy-first UX"],
+      "category": "Product",
+      "updated": "2026-02-17",
+      "links": [
+        { "label": "Repo", "url": "https://github.com/driverext/disputeshield" },
+        { "label": "Live Site", "url": "https://disputeshield.app" }
+      ]
+    },
+    {
+      "title": "Eustis MCP",
+      "repoName": "eustis-mcp",
+      "status": "Tooling",
+      "description": "Unofficial MCP server for UCF's Eustis Linux server with SSH command execution, SCP transfer, runtime diagnostics, and a bridge mode for sandboxed MCP clients.",
+      "stack": ["Python", "MCP", "SSH", "SCP", "Sandboxing"],
+      "category": "Systems",
+      "updated": "2026-04-18",
+      "links": [
+        { "label": "Repo", "url": "https://github.com/driverext/eustis-mcp" }
+      ]
+    },
+    {
+      "title": "Devup",
+      "repoName": "devup",
+      "status": "CLI",
+      "description": "Local development orchestrator that detects project dependencies, generates Docker Compose and env files, starts services, and verifies health from one command.",
+      "stack": ["Node.js", "JavaScript", "Docker", "Docker Compose"],
+      "category": "Developer Tools",
+      "updated": "2026-02-03",
+      "links": [
+        { "label": "Repo", "url": "https://github.com/driverext/devup" }
+      ]
+    },
+    {
+      "title": "NetTrace",
+      "repoName": "NetTrace",
+      "status": "Network Lab",
+      "description": "TCP-first traceroute visualizer with live hop streaming, geolocation, ASN/WHOIS enrichment, hop classification, export tools, and a Leaflet map UI for network visibility.",
+      "stack": ["Python", "Flask", "Scapy", "Network Analysis", "SSE", "Leaflet"],
+      "category": "Systems",
+      "updated": "2026-02-03",
       "links": [
         { "label": "Repo", "url": "https://github.com/driverext/NetTrace" },
         { "label": "Live Demo", "url": "https://driverext.github.io/NetTrace/" }
       ]
     },
     {
-      "title": "Portfolio Website (This Site)",
-      "status": "Completed",
-      "description": "A sleek, data-driven portfolio with a custom design and an embedded Snake mini-game.",
-      "stack": ["HTML", "CSS", "JavaScript"],
+      "title": "Portfolio Website",
+      "repoName": "portfolio-jacob",
+      "status": "This Site",
+      "description": "A static, data-driven portfolio with an animated repo map, project filters, responsive layout, and a playable Snake mini-game.",
+      "stack": ["HTML", "CSS", "JavaScript", "Canvas"],
+      "category": "Frontend",
+      "updated": "2026-02-03",
       "links": [
         { "label": "Repo", "url": "https://github.com/driverext/portfolio-jacob" },
         { "label": "Live Demo", "url": "https://driverext.github.io/portfolio-jacob/" }
-      ]
-    },
-    {
-      "title": "Devup",
-      "status": "In Progress",
-      "description": "A small CLI that turns local environment setup into a single command by detecting your project, bringing up Docker services, generating .env files, and verifying health.",
-      "stack": ["Node.js", "JavaScript", "Docker", "Docker Compose"],
-      "links": [
-        { "label": "Repo", "url": "https://github.com/driverext/devup" }
-      ]
-    },
-    {
-      "title": "Locklint",
-      "status": "In Progress",
-      "description": "A static analysis tool that detects lock-order inversions in C/C++ codebases to provide early, design-level feedback on lock ordering before code runs.",
-      "stack": ["Python", "C/C++"],
-      "links": [
-        { "label": "Repo", "url": "https://github.com/driverext/locklint" }
       ]
     }
   ]
